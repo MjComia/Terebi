@@ -1,11 +1,13 @@
+import "dotenv/config"
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.SUPABASE_URL
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY
-//Last time its ANON_KEY NOW ITS SERVICE_KEY
+const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY
 
-console.log("USING KEY:", supabaseKey?.substring(0, 30) + "...")
+if (!supabaseUrl || !supabaseKey) {
+  console.error("❌ Missing Supabase URL or Key in environment variables!")
+}
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-export default supabase
+export default supabase
