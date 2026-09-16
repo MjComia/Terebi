@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import authRoutes from "./routes/authRoutes.js"
+import searchRoutes from "./routes/searchRoutes.js"
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -16,6 +17,9 @@ app.get("/", (req, res) => {
 
 ///Auth Routes
 app.use("/api/auth", authRoutes);
+
+///Search Routes
+app.use("/api/search", searchRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

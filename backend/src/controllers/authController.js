@@ -40,21 +40,55 @@ export const register = async (req, res) => {
     }
 }
 
-export const login = async (req, res) => {
-    const { username, password } = req.body || {}
+// export const login = async (req, res) => {
+//     const { username, password } = req.body || {}
 
-    if (!username || !password) {
-        return res.status(400).json({ error: "Username and password are required" })
+//     if (!username || !password) {
+//         return res.status(400).json({ error: "Username and password are required" })
+//     }
+
+//     try {
+//         const { data, error } = await supabase.auth.signInWithPassword({
+//             username,
+//             password
+//         })
+//         if (error) return res.status(400).json({ error: error.message })
+//         return res.status(200).json({ message: 'Logged in Successfully', user: data.user, session: data.session })
+//     } catch (error) {
+//         return res.status(500).json({ message: "Internal Server Error" })
+//     }
+// }
+export const login = async (req, res) => {
+    const { email, username, password } = req.body || {}
+
+    if ((!email && !username) || !password) {
+        return res.status(400).json({ error: "Email or username, and password are required" })
     }
 
     try {
+        let loginEmail = email
+
+        // If username was given, find the email from public.user table
+        if (!loginEmail && username) {
+            const { data: profile } = await supabase
+                .from('user')
+                .select('email')
+                .eq('username', username)
+                .single()
+
+            if (!profile) return res.status(400).json({ error: "User not found" })
+            loginEmail = profile.email
+        }
+
         const { data, error } = await supabase.auth.signInWithPassword({
-            username,
+            email: loginEmail,
             password
         })
+
         if (error) return res.status(400).json({ error: error.message })
         return res.status(200).json({ message: 'Logged in Successfully', user: data.user, session: data.session })
     } catch (error) {
         return res.status(500).json({ message: "Internal Server Error" })
     }
 }
+
