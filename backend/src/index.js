@@ -2,8 +2,10 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import authRoutes from "./routes/authRoutes.js"
-import searchRoutes from "./routes/searchRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
+import searchRoutes from "./routes/searchRoutes.js";
+import movieRoutes from "./routes/movieRoutes.js";
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -20,6 +22,8 @@ app.use("/api/auth", authRoutes);
 
 ///Search Routes
 app.use("/api/search", searchRoutes);
+
+app.use("/api/movies", movieRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

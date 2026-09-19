@@ -101,3 +101,24 @@ export const searchTV = async ({
     first_air_date_year,
   });
 };
+
+export const getTrendingMovies = async ({
+  timeWindow = "day",
+  page = 1,
+  language = "en-US",
+}) => {
+  return tmdbFetch(`/trending/movie/${timeWindow}`, { page, language });
+};
+
+export const getGenres = async ({ language = "en" }) => {
+  return tmdbFetch("/genre/movie/list", { language });
+};
+
+export const discoverMovies = async ({
+  with_genres,
+  page = 1,
+  language = "en-US",
+  sort_by = "popularity.desc",
+}) => {
+  return tmdbFetch("/discover/movie", { with_genres, page, language, sort_by });
+};
