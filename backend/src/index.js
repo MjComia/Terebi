@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import authRoutes from "./routes/authRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
+import tvRoutes from "./routes/tvRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/search", searchRoutes);
 
 app.use("/api/movies", movieRoutes);
+app.use("/api/tv", tvRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

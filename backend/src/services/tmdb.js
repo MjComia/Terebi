@@ -122,3 +122,36 @@ export const discoverMovies = async ({
 }) => {
   return tmdbFetch("/discover/movie", { with_genres, page, language, sort_by });
 };
+
+/** Trending movies AND TV shows combined — used for hero banner */
+export const getTrendingAll = async ({
+  timeWindow = "week",
+  page = 1,
+  language = "en-US",
+}) => {
+  return tmdbFetch(`/trending/all/${timeWindow}`, { page, language });
+};
+
+/** Trending TV shows only */
+export const getTrendingTV = async ({
+  timeWindow = "week",
+  page = 1,
+  language = "en-US",
+}) => {
+  return tmdbFetch(`/trending/tv/${timeWindow}`, { page, language });
+};
+
+/** Genre list for TV shows */
+export const getTVGenres = async ({ language = "en" }) => {
+  return tmdbFetch("/genre/tv/list", { language });
+};
+
+/** Discover TV shows filtered by genre */
+export const discoverTV = async ({
+  with_genres,
+  page = 1,
+  language = "en-US",
+  sort_by = "popularity.desc",
+}) => {
+  return tmdbFetch("/discover/tv", { with_genres, page, language, sort_by });
+};

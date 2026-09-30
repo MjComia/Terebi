@@ -1,5 +1,6 @@
 import {
   getTrendingMovies,
+  getTrendingAll,
   getGenres,
   discoverMovies,
 } from "../services/tmdb.js";
@@ -19,6 +20,23 @@ export const getTrending = async (req, res) => {
   } catch (error) {
     console.error("Trending movies error:", error.message);
     return res.status(500).json({ error: "Failed to fetch trending movies" });
+  }
+};
+
+/**
+ * GET /api/movies/trending/all?timeWindow=week
+ * Returns trending movies AND TV shows combined — used for hero banner.
+ */
+export const getTrendingAllHandler = async (req, res) => {
+  const { timeWindow = "week", page = 1, language = "en-US" } = req.query;
+
+  try {
+    const data = await getTrendingAll({ timeWindow, page, language });
+    data.results = enrichResults(data.results);
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("Trending all error:", error.message);
+    return res.status(500).json({ error: "Failed to fetch trending content" });
   }
 };
 
