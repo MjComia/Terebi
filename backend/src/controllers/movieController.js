@@ -3,8 +3,26 @@ import {
   getTrendingAll,
   getGenres,
   discoverMovies,
+  getUpcomingMovies,
 } from "../services/tmdb.js";
 import { enrichResults } from "./searchController.js";
+
+/**
+ * GET /api/movies/upcoming?page=1
+ * Returns upcoming movies for Coming Soon.
+ */
+export const getUpcoming = async (req, res) => {
+  const { page = 1, language = "en-US", region } = req.query;
+
+  try {
+    const data = await getUpcomingMovies({ page, language, region });
+    data.results = enrichResults(data.results);
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("Upcoming movies error:", error.message);
+    return res.status(500).json({ error: "Failed to fetch upcoming movies" });
+  }
+};
 
 /**
  * GET /api/movies/trending?timeWindow=day&page=1

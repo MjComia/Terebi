@@ -32,18 +32,23 @@ function useFetch(endpoint) {
 }
 
 /** GET /api/movies/trending?timeWindow=week (movies only) */
-export function useTrending(timeWindow = "week") {
-  return useFetch(`/api/movies/trending?timeWindow=${timeWindow}`);
+export function useTrending(timeWindow = "week", page = 1) {
+  return useFetch(`/api/movies/trending?timeWindow=${timeWindow}&page=${page}`);
 }
 
 /** GET /api/movies/trending/all?timeWindow=week (movies + TV combined) */
-export function useTrendingAll(timeWindow = "week") {
-  return useFetch(`/api/movies/trending/all?timeWindow=${timeWindow}`);
+export function useTrendingAll(timeWindow = "week", page = 1) {
+  return useFetch(`/api/movies/trending/all?timeWindow=${timeWindow}&page=${page}`);
+}
+
+/** GET /api/movies/upcoming?page=1 (upcoming movies) */
+export function useUpcoming(page = 1) {
+  return useFetch(`/api/movies/upcoming?page=${page}`);
 }
 
 /** GET /api/tv/trending?timeWindow=week (TV only) */
-export function useTrendingTV(timeWindow = "week") {
-  return useFetch(`/api/tv/trending?timeWindow=${timeWindow}`);
+export function useTrendingTV(timeWindow = "week", page = 1) {
+  return useFetch(`/api/tv/trending?timeWindow=${timeWindow}&page=${page}`);
 }
 
 /** GET /api/tv/genres */
@@ -52,8 +57,8 @@ export function useTVGenres() {
 }
 
 /** GET /api/tv/genre/:genreId */
-export function useTVByGenre(genreId) {
-  return useFetch(genreId ? `/api/tv/genre/${genreId}` : null);
+export function useTVByGenre(genreId, page = 1) {
+  return useFetch(genreId ? `/api/tv/genre/${genreId}?page=${page}` : null);
 }
 
 /** GET /api/movies/genres */
@@ -62,6 +67,6 @@ export function useGenres() {
 }
 
 /** GET /api/movies/genre/:genreId */
-export function useMoviesByGenre(genreId) {
-  return useFetch(genreId ? `/api/movies/genre/${genreId}` : null);
+export function useMoviesByGenre(genreId, page = 1) {
+  return useFetch(genreId ? `/api/movies/genre/${genreId}?page=${page}` : null);
 }

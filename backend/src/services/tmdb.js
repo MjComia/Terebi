@@ -155,3 +155,13 @@ export const discoverTV = async ({
 }) => {
   return tmdbFetch("/discover/tv", { with_genres, page, language, sort_by });
 };
+
+/** Upcoming movies for coming soon */
+export const getUpcomingMovies = async ({
+  page = 1,
+  language = "en-US",
+  region,
+} = {}) => {
+  return tmdbFetch("/movie/upcoming", { page, language, region });
+};
+

@@ -28,7 +28,7 @@ export function Navbar() {
               <Link to="/movies">Movies</Link>
             </li>
             <li className="text-gray-400 hover:text-white transition-colors duration-200">
-              <Link to="/tv-shows">TV Shows</Link>
+              <Link to="/tv">TV Shows</Link>
             </li>
             <li className="text-gray-400 hover:text-white transition-colors duration-200">
               <Link to="/new-and-popular">New and Popular</Link>

@@ -1,25 +1,22 @@
 import { useState } from "react";
 import { Navbar } from "../assets/generalAssets/navbar";
-import { useMoviesByGenre, useTrending } from "../hooks/useTmdb";
+import { useTVByGenre, useTrendingTV } from "../hooks/useTmdb";
 import { Footer } from "../assets/generalAssets/Footer";
 import { MovieCard } from "../assets/homepage/MovieCard";
 
 const GENRES = [
-  { id: 28, name: "Action" },
-  { id: 35, name: "Comedy" },
-  { id: 27, name: "Horror" },
-  { id: 18, name: "Drama" },
-  { id: 878, name: "Science Fiction" },
-  { id: 10749, name: "Romance" },
-  { id: 53, name: "Thriller" },
-  { id: 16, name: "Animation" },
-  { id: 12, name: "Adventure" },
-  { id: 36, name: "History" },
-  { id: 14, name: "Fantasy" },
-  { id: 99, name: "Documentary" },
+  { id: 10759, name: "Action & Adventure" },
+  { id: 10762, name: "Kids" },
+  { id: 10765, name: "Sci-Fi & Fantasy" },
+  { id: 80, name: "Crime" },
+  { id: 10764, name: "Reality" },
+  { id: 10751, name: "Family" },
+  { id: 10767, name: "News" },
+  { id: 10763, name: "Talk" },
+  { id: 10768, name: "War & Politics" },
 ];
 
-export function MoviePage() {
+export function TvShowsPage() {
   const [genreId, setGenreId] = useState(null);
   const [page, setPage] = useState(1);
 
@@ -29,26 +26,26 @@ export function MoviePage() {
     setPage(1);
   }
 
-  const { data: trendingData, loading: trendingLoading } = useTrending(
+  const { data: trendingData, loading: trendingLoading } = useTrendingTV(
     "week",
     page,
   );
-  const { data: genreData, loading: genreLoading } = useMoviesByGenre(
+  const { data: genreData, loading: genreLoading } = useTVByGenre(
     genreId,
     page,
   );
 
-  // No genre selected → show trending. Genre selected → show genre movies.
+  // No genre selected → show trending. Genre selected → show genre tvShows.
   const isLoading = genreId ? genreLoading : trendingLoading;
   const currentData = genreId ? genreData : trendingData;
-  const movies = currentData?.results || [];
+  const tvShows = currentData?.results || [];
   const totalPages = currentData?.total_pages || 1;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <Navbar />
       <div className="px-8 pt-28 w-full flex flex-col">
-        <h1 className="text-3xl font-bold">Movies</h1>
+        <h1 className="text-3xl font-bold">TV Shows</h1>
         <ul className="flex flex-wrap gap-3 mt-4">
           {/* "All" tab to reset back to trending */}
           <li
@@ -91,7 +88,7 @@ export function MoviePage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-6">
-            {movies.map((movie) => (
+            {tvShows.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
@@ -99,7 +96,7 @@ export function MoviePage() {
       </div>
 
       {/* Pagination */}
-      {!isLoading && movies.length > 0 && (
+      {!isLoading && tvShows.length > 0 && (
         <div className="flex items-center justify-center gap-4 py-8">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}

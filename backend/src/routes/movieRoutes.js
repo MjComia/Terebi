@@ -4,6 +4,7 @@ import {
   getTrendingAllHandler,
   getGenreList,
   getMoviesByGenre,
+  getUpcoming,
 } from "../controllers/movieController.js";
 
 const router = express.Router();
@@ -13,6 +14,9 @@ router.get("/trending", getTrending);
 
 // GET /api/movies/trending/all?timeWindow=week  (movies + TV combined)
 router.get("/trending/all", getTrendingAllHandler);
+
+// GET /api/movies/upcoming?page=1  (upcoming movies / Coming Soon)
+router.get("/upcoming", getUpcoming);
 
 // GET /api/movies/genres
 router.get("/genres", getGenreList);
