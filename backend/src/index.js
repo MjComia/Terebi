@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import tvRoutes from "./routes/tvRoutes.js";
+import favRoutes from "./routes/watchListRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -26,6 +27,7 @@ app.use("/api/search", searchRoutes);
 
 app.use("/api/movies", movieRoutes);
 app.use("/api/tv", tvRoutes);
+app.use("/api/watchlist", favRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
